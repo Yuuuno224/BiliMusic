@@ -47,7 +47,7 @@ public class LibraryFragment extends Fragment {
         list = v.findViewById(R.id.library_list);
 
         adapter = new SongAdapter(shown, (all, position) ->
-                PlayerConnection.playQueue(all, position));
+                PlayerConnection.playQueue(requireContext(), all, position));
         list.setLayoutManager(new LinearLayoutManager(getContext()));
         list.setAdapter(adapter);
 
