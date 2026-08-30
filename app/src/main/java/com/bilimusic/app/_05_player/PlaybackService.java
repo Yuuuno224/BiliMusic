@@ -248,7 +248,7 @@ public class PlaybackService extends MediaSessionService {
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         Player p = session != null ? session.getPlayer() : null;
-        if (p == null || !p.playWhenReady || p.getMediaItemCount() == 0) {
+        if (p == null || !p.getPlayWhenReady() || p.getMediaItemCount() == 0) {
             stopSelf();
         }
     }

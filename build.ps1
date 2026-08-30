@@ -6,6 +6,7 @@
 
 $env:JAVA_HOME = "D:\Android\Android Studio\jbr"
 $env:GRADLE_USER_HOME = "D:\Android\AndroidGradle"
+$env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
 
 $gradle = "D:\Android\AndroidGradle\wrapper\dists\gradle-9.4.1-bin\arn2x92ynaizyzdaamcbpbhtj\gradle-9.4.1\bin\gradle.bat"
 
@@ -17,9 +18,9 @@ if (-not (Test-Path $gradle)) {
 $target = if ($args.Count -gt 0) { $args[0] } else { "assembleDebug" }
 
 switch ($target) {
-    "clean"   { & $gradle --no-daemon clean }
-    "wrapper" { & $gradle --no-daemon wrapper --gradle-version 9.4.1 }
-    "release" { & $gradle --no-daemon assembleRelease }
-    default   { & $gradle --no-daemon assembleDebug }
+    "clean"   { & $gradle clean }
+    "wrapper" { & $gradle wrapper --gradle-version 9.4.1 }
+    "release" { & $gradle assembleRelease }
+    default   { & $gradle assembleDebug }
 }
 exit $LASTEXITCODE

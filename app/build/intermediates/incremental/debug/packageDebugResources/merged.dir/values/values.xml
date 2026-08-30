@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#1DB9C4</color>
+    <color name="accent_dim">#0E5C61</color>
+    <color name="bg">#121212</color>
+    <color name="divider">#2C2C2C</color>
+    <color name="heart_red">#E91E63</color>
+    <color name="on_bg">#FFFFFF</color>
+    <color name="on_bg_secondary">#B3B3B3</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="surface_high">#2A2A2A</color>
+    <string name="app_name">BiliMusic</string>
+    <string name="copy_link">复制授权链接</string>
+    <string name="disclaimer">本应用为个人学习用途的纯客户端播放器，音源来自B站公开视频。请支持正版。</string>
+    <string name="login_desc">点击下方按钮打开授权页面，在B站APP中确认后即可登录。登录后可解锁更高音质。</string>
+    <string name="login_title">登录B站账号</string>
+    <string name="nav_library">乐库</string>
+    <string name="nav_me">我的</string>
+    <string name="nav_search">搜索</string>
+    <string name="open_auth">打开B站APP授权</string>
+    <string name="search_hint">搜索想听的音乐、UP主…</string>
+    <string name="search_history">搜索历史</string>
+    <style name="Theme.BiliMusic" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:navigationBarColor">@color/bg</item>
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorOnPrimary">#003033</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_bg</item>
+        <item name="colorOnSurfaceVariant">@color/on_bg_secondary</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
+</resources>

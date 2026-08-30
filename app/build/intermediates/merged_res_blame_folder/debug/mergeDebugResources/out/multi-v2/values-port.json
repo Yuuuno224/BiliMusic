@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.bilimusic.app-mergeDebugResources-32:/values-port/values-port.xml",
+            "map": [
+                {
+                    "source": "D:\\Android\\AndroidGradle\\caches\\9.4.1\\transforms\\ca40241efded7819587679b12e0a2814\\transformed\\appcompat-1.6.1\\res\\values-port\\values-port.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}

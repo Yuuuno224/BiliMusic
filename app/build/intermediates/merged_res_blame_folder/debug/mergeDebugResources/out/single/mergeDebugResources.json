@@ -1,0 +1,110 @@
+[
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_close.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_close.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/layout_fragment_me.xml.flat",
+        "source": "com.bilimusic.app-main-36:/layout/fragment_me.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_heart_filled.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_heart_filled.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_repeat.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_repeat.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_heart.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_heart.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/layout_item_song.xml.flat",
+        "source": "com.bilimusic.app-main-36:/layout/item_song.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_pause.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_pause.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/menu_bottom_nav.xml.flat",
+        "source": "com.bilimusic.app-main-36:/menu/bottom_nav.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_play.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_play.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/color_nav_item_color.xml.flat",
+        "source": "com.bilimusic.app-main-36:/color/nav_item_color.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/layout_fragment_library.xml.flat",
+        "source": "com.bilimusic.app-main-36:/layout/fragment_library.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.bilimusic.app-main-36:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/layout_activity_now_playing.xml.flat",
+        "source": "com.bilimusic.app-main-36:/layout/activity_now_playing.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_prev.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_prev.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_search.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_search.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_next.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_next.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/layout_activity_qr_login.xml.flat",
+        "source": "com.bilimusic.app-main-36:/layout/activity_qr_login.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/layout_item_search_chip.xml.flat",
+        "source": "com.bilimusic.app-main-36:/layout/item_search_chip.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/layout_activity_main.xml.flat",
+        "source": "com.bilimusic.app-main-36:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_person.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_person.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_repeat_one.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_repeat_one.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/layout_fragment_search.xml.flat",
+        "source": "com.bilimusic.app-main-36:/layout/fragment_search.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_launcher_fg.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_launcher_fg.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_bg_play_button.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/bg_play_button.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_bg_search_box.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/bg_search_box.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_music_note.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_music_note.xml"
+    },
+    {
+        "merged": "com.bilimusic.app-debug-34:/drawable_ic_library.xml.flat",
+        "source": "com.bilimusic.app-main-36:/drawable/ic_library.xml"
+    }
+]

@@ -6,6 +6,7 @@ import java.util.List;
 public class ViewData {
     public String bvid;
     public long aid;
+    public long cid;
     public String title;
     public String pic;
     public long duration;

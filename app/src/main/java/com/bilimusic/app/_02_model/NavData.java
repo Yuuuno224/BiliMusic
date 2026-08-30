@@ -6,5 +6,4 @@ public class NavData {
     public String uname;
     public String face;
     public int level;
-    public long money;
 }

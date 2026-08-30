@@ -65,7 +65,7 @@ public final class AuthManager {
                             NavData finalMe = me;
                             MAIN.post(() -> cb.onSuccess(finalMe));
                         } else {
-                            MAIN.post(cb::onSuccess);
+                            MAIN.post(() -> cb.onSuccess(null));
                         }
                         break;
                     case QrPollData.ST_SCANNED:

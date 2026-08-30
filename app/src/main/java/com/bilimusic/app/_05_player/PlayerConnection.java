@@ -28,17 +28,17 @@ public final class PlayerConnection {
     private static final Player.Listener NOTIFY = new Player.Listener() {
         @Override
         public void onIsPlayingChanged(boolean isPlaying) {
-            notifyAll();
+            notifyListeners();
         }
 
         @Override
         public void onMediaItemTransition(@androidx.annotation.Nullable MediaItem item, int reason) {
-            notifyAll();
+            notifyListeners();
         }
 
         @Override
         public void onPlaybackStateChanged(int state) {
-            notifyAll();
+            notifyListeners();
         }
     };
 
@@ -64,7 +64,7 @@ public final class PlayerConnection {
                 controller = c;
                 controller.addListener(NOTIFY);
                 onReady.accept(c);
-                notifyAll();
+                notifyListeners();
             } catch (Exception ignored) {
             }
         }, Runnable::run);
@@ -82,7 +82,7 @@ public final class PlayerConnection {
         LISTENERS.remove(l);
     }
 
-    private static void notifyAll() {
+    private static void notifyListeners() {
         for (Listener l : LISTENERS) {
             l.onPlayerChanged();
         }
