@@ -30,7 +30,6 @@
             android:layout_height="44dp"
             android:scaleType="centerCrop"
             android:contentDescription="@string/app_name"
-            app:tint="@color/on_bg_secondary"
             android:src="@drawable/ic_music_note" />
 
         <LinearLayout

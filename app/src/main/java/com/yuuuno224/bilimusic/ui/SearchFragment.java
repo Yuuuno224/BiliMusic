@@ -56,7 +56,7 @@ public class SearchFragment extends Fragment {
         ImageButton go = v.findViewById(R.id.search_btn);
 
         adapter = new SongAdapter(results, (all, position) ->
-                PlayerConnection.playQueue(all, position));
+                PlayerConnection.playQueue(requireContext(), all, position));
         resultList.setLayoutManager(new LinearLayoutManager(getContext()));
         resultList.setAdapter(adapter);
 

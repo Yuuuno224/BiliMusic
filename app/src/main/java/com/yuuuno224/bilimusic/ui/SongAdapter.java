@@ -67,7 +67,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.Holder> {
             boolean nowFav = MusicStore.isFavorite(s.bvid);
             h.fav.setImageResource(nowFav ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
         });
-        h.more.setOnClickListener(v -> PlayerConnection.playNext(s));
+        h.more.setOnClickListener(v -> PlayerConnection.playNext(v.getContext(), s));
     }
 
     @Override
