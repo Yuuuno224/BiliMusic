@@ -1,5 +1,5 @@
 # Gson 通用类型（ApiResponse<T> 等）反射序列化
--keep class com.bilimusic.app.**_02_model.** { *; }
+-keep class com.yuuuno224.bilimusic.model.** { *; }
 -keepattributes Signature
 -keepattributes *Annotation*
 

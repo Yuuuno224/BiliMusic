@@ -17,7 +17,7 @@
         android:theme="@style/Theme.BiliMusic">
 
         <activity
-            android:name="._07_ui.MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize">
@@ -28,16 +28,16 @@
         </activity>
 
         <activity
-            android:name="._07_ui.NowPlayingActivity"
+            android:name=".ui.NowPlayingActivity"
             android:exported="false"
             android:launchMode="singleTop" />
 
         <activity
-            android:name="._07_ui.QrLoginActivity"
+            android:name=".ui.QrLoginActivity"
             android:exported="false" />
 
         <service
-            android:name="._05_player.PlaybackService"
+            android:name=".player.PlaybackService"
             android:exported="true"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>

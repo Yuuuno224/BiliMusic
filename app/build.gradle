@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.bilimusic.app'
+    namespace 'com.yuuuno224.bilimusic'
     compileSdkVersion "android-36.1"
 
     defaultConfig {
-        applicationId "com.bilimusic.app"
+        applicationId "com.yuuuno224.bilimusic"
         minSdk 26
         targetSdk 35
         versionCode 1
