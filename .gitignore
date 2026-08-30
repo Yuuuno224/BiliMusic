@@ -18,4 +18,5 @@ captures/
 # Tools
 .codegraph/
 .codeartsdoer/
+.merkle-snapshot.json
 tools/api-probe/*.class

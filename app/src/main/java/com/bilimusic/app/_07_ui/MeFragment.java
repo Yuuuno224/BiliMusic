@@ -64,7 +64,7 @@ public class MeFragment extends Fragment {
             loginBtn.setVisibility(View.GONE);
             logoutBtn.setVisibility(View.VISIBLE);
             name.setText(me.uname);
-            level.setText("LV" + me.level + " · 已登录B站账号");
+            level.setText("LV" + me.level() + " · 已登录B站账号");
             if (me.face != null && !me.face.isEmpty()) {
                 ImageLoader.load(me.face, bmp -> {
                     if (bmp != null) {
