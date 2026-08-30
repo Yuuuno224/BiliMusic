@@ -5,5 +5,13 @@ public class NavData {
     public long mid;
     public String uname;
     public String face;
-    public int level;
+    public LevelInfo level_info;
+
+    public int level() {
+        return level_info != null ? level_info.current_level : 0;
+    }
+
+    public static class LevelInfo {
+        public int current_level;
+    }
 }
