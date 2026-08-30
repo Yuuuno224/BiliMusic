@@ -16,6 +16,7 @@ import androidx.media3.exoplayer.source.DefaultMediaSourceFactory;
 import androidx.media3.session.MediaSession;
 import androidx.media3.session.MediaSessionService;
 import androidx.media3.session.SessionCommand;
+import androidx.media3.session.SessionCommands;
 import androidx.media3.session.SessionResult;
 
 import com.yuuuno224.bilimusic.store.MusicStore;
@@ -99,6 +100,18 @@ public class PlaybackService extends MediaSessionService {
         session = new MediaSession.Builder(this, player)
                 .setSessionActivity(pi)
                 .setCallback(new MediaSession.Callback() {
+                    @Override
+                    public MediaSession.ConnectionResult onConnect(
+                            MediaSession session, MediaSession.ControllerInfo controller) {
+                        SessionCommands cmds = new SessionCommands.Builder()
+                                .add(new SessionCommand(CMD_PLAY_QUEUE, Bundle.EMPTY))
+                                .add(new SessionCommand(CMD_PLAY_NEXT, Bundle.EMPTY))
+                                .add(new SessionCommand(CMD_ADD_QUEUE, Bundle.EMPTY))
+                                .build();
+                        return MediaSession.ConnectionResult.accept(
+                                cmds, MediaSession.ConnectionResult.DEFAULT_PLAYER_COMMANDS);
+                    }
+
                     @Override
                     public ListenableFuture<SessionResult> onCustomCommand(
                             MediaSession mediaSession, MediaSession.ControllerInfo controller,
