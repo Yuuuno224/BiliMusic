@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BiliMusic</string>
+    <string name="nav_search">搜索</string>
+    <string name="nav_library">乐库</string>
+    <string name="nav_me">我的</string>
+    <string name="search_hint">搜索想听的音乐、UP主…</string>
+    <string name="search_history">搜索历史</string>
+    <string name="login_title">登录B站账号</string>
+    <string name="login_desc">点击下方按钮打开授权页面，在B站APP中确认后即可登录。登录后可解锁更高音质。</string>
+    <string name="open_auth">打开B站APP授权</string>
+    <string name="copy_link">复制授权链接</string>
+    <string name="disclaimer">本应用为个人学习用途的纯客户端播放器，音源来自B站公开视频。请支持正版。</string>
+</resources>
