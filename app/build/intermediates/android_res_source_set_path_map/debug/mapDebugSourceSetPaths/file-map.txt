@@ -1,8 +1,0 @@
-com.bilimusic.app-pngs-0 D:\code\BiliMusic\app\build\generated\res\pngs\debug
-com.bilimusic.app-updated_navigation_xml-1 D:\code\BiliMusic\app\build\generated\updated_navigation_xml\debug
-com.bilimusic.app-packageDebugResources-2 D:\code\BiliMusic\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
-com.bilimusic.app-packageDebugResources-3 D:\code\BiliMusic\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
-com.bilimusic.app-debug-4 D:\code\BiliMusic\app\build\intermediates\merged_res\debug\mergeDebugResources
-com.bilimusic.app-debug-5 D:\code\BiliMusic\app\src\debug\res
-com.bilimusic.app-main-6 D:\code\BiliMusic\app\src\main\res
-gradleHome-0 D:\Android\AndroidGradle

@@ -1,0 +1,21 @@
+# Gradle / build
+.gradle/
+build/
+local.properties
+captures/
+.cxx/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Native / logs
+*.log
+
+# Tools
+.codegraph/
+.codeartsdoer/
+tools/api-probe/*.class
