@@ -251,7 +251,7 @@ public class PlaybackService extends MediaSessionService {
         new android.os.Handler(android.os.Looper.getMainLooper()).post(r);
     }
 
-    static Song songOf(MediaItem item) {
+    public static Song songOf(MediaItem item) {
         if (item == null || item.mediaMetadata == null || item.mediaMetadata.extras == null) {
             return null;
         }

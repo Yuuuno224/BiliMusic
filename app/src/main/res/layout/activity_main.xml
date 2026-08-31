@@ -60,12 +60,33 @@
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/mini_fav"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_heart"
+            app:tint="@color/on_bg" />
+
+        <ImageButton
             android:id="@+id/mini_play"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginStart="4dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_play"
+            app:tint="@color/on_bg" />
+
+        <ImageButton
+            android:id="@+id/mini_playlist"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_playlist"
             app:tint="@color/on_bg" />
     </LinearLayout>
 
