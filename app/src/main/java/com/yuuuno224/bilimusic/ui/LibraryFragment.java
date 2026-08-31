@@ -30,6 +30,8 @@ import java.util.List;
 /** 乐库：我喜欢 / 最近播放 / B站收藏夹 */
 public class LibraryFragment extends Fragment {
 
+    public static final String ARG_TAB = "tab";
+
     private TextView countText;
     private ImageButton clearBtn;
     private RecyclerView list;
@@ -94,7 +96,12 @@ public class LibraryFragment extends Fragment {
             }
         });
 
-        reload();
+        int initialTab = getArguments() != null ? getArguments().getInt(ARG_TAB, 0) : 0;
+        if (initialTab > 0 && initialTab < 3) {
+            tabs.getTabAt(initialTab).select();
+        } else {
+            reload();
+        }
     }
 
     @Override

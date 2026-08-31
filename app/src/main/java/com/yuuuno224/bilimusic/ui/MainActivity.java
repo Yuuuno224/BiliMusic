@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements PlayerConnection.
     private ImageButton miniPlay;
     private ImageButton miniFav;
     private Fragment current;
+    private int pendingLibraryTab = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,14 @@ public class MainActivity extends AppCompatActivity implements PlayerConnection.
                 show(new SearchFragment(), "search");
                 return true;
             } else if (id == R.id.nav_library) {
-                show(new LibraryFragment(), "library");
+                LibraryFragment f = new LibraryFragment();
+                if (pendingLibraryTab >= 0) {
+                    Bundle args = new Bundle();
+                    args.putInt(LibraryFragment.ARG_TAB, pendingLibraryTab);
+                    f.setArguments(args);
+                    pendingLibraryTab = -1;
+                }
+                show(f, "library");
                 return true;
             } else if (id == R.id.nav_me) {
                 show(new MeFragment(), "me");
@@ -83,6 +91,22 @@ public class MainActivity extends AppCompatActivity implements PlayerConnection.
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, f, tag)
                 .commit();
+    }
+
+    /** 切到乐库并指定初始 Tab（供"我的"页快捷入口调用） */
+    public void openLibraryTab(int tab) {
+        pendingLibraryTab = tab;
+        BottomNavigationView nav = findViewById(R.id.bottom_nav);
+        if (nav.getSelectedItemId() == R.id.nav_library) {
+            LibraryFragment f = new LibraryFragment();
+            Bundle args = new Bundle();
+            args.putInt(LibraryFragment.ARG_TAB, tab);
+            f.setArguments(args);
+            pendingLibraryTab = -1;
+            show(f, "library");
+        } else {
+            nav.setSelectedItemId(R.id.nav_library);
+        }
     }
 
     @Override
