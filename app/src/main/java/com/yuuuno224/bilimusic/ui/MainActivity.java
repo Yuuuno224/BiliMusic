@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements PlayerConnection.
         });
 
         miniBar.setOnClickListener(v -> startActivity(new android.content.Intent(this, NowPlayingActivity.class)));
+        miniPlay.setOnClickListener(v -> PlayerConnection.toggle());
 
         PlayerConnection.connect(this, c -> runOnUiThread(this::onPlayerChanged));
         PlayerConnection.addListener(this);

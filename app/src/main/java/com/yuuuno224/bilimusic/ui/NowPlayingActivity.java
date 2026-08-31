@@ -21,9 +21,6 @@ import com.yuuuno224.bilimusic.util.ImageLoader;
 /** 沉浸式播放页：大封面 + 进度 + 控制区 */
 public class NowPlayingActivity extends AppCompatActivity implements PlayerConnection.Listener {
 
-    private static final int MODE_ORDER = 0;
-    private static final int MODE_REPEAT_ONE = 1;
-
     private ImageView cover;
     private TextView title;
     private TextView up;
@@ -36,7 +33,6 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerConne
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private boolean seeking;
-    private int mode = MODE_ORDER;
 
     private final Runnable progressTick = new Runnable() {
         @Override
@@ -79,15 +75,22 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerConne
         prev.setOnClickListener(v -> PlayerConnection.prev());
 
         modeBtn.setOnClickListener(v -> {
-            mode = mode == MODE_ORDER ? MODE_REPEAT_ONE : MODE_ORDER;
             androidx.media3.common.Player p = PlayerConnection.get();
-            if (p != null) {
-                p.setRepeatMode(mode == MODE_REPEAT_ONE
-                        ? androidx.media3.common.Player.REPEAT_MODE_ONE
-                        : androidx.media3.common.Player.REPEAT_MODE_OFF);
+            if (p == null) {
+                return;
             }
-            modeBtn.setImageResource(mode == MODE_REPEAT_ONE
-                    ? R.drawable.ic_repeat_one : R.drawable.ic_repeat);
+            int cur = p.getRepeatMode();
+            int nextMode = cur == androidx.media3.common.Player.REPEAT_MODE_OFF
+                    ? androidx.media3.common.Player.REPEAT_MODE_ALL
+                    : cur == androidx.media3.common.Player.REPEAT_MODE_ALL
+                    ? androidx.media3.common.Player.REPEAT_MODE_ONE
+                    : androidx.media3.common.Player.REPEAT_MODE_OFF;
+            p.setRepeatMode(nextMode);
+            applyRepeatUi();
+            String label = nextMode == androidx.media3.common.Player.REPEAT_MODE_ALL
+                    ? "列表循环" : nextMode == androidx.media3.common.Player.REPEAT_MODE_ONE
+                    ? "单曲循环" : "顺序播放";
+            Toast.makeText(this, label, Toast.LENGTH_SHORT).show();
         });
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -125,9 +128,27 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerConne
             runOnUiThread(() -> {
                 PlayerConnection.addListener(this);
                 onPlayerChanged();
+                applyRepeatUi();
             });
         });
         handler.post(progressTick);
+    }
+
+    /** 以播放器实际 repeatMode 同步循环按钮 UI */
+    private void applyRepeatUi() {
+        androidx.media3.common.Player p = PlayerConnection.get();
+        int rm = p != null ? p.getRepeatMode() : androidx.media3.common.Player.REPEAT_MODE_OFF;
+        if (rm == androidx.media3.common.Player.REPEAT_MODE_ONE) {
+            modeBtn.setImageResource(R.drawable.ic_repeat_one);
+            modeBtn.setColorFilter(androidx.core.content.ContextCompat.getColor(this, R.color.accent));
+        } else if (rm == androidx.media3.common.Player.REPEAT_MODE_ALL) {
+            modeBtn.setImageResource(R.drawable.ic_repeat);
+            modeBtn.setColorFilter(androidx.core.content.ContextCompat.getColor(this, R.color.accent));
+        } else {
+            modeBtn.setImageResource(R.drawable.ic_order);
+            modeBtn.setColorFilter(
+                    androidx.core.content.ContextCompat.getColor(this, R.color.accent));
+        }
     }
 
     @Override
@@ -154,8 +175,10 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerConne
     }
 
     private void refreshFav(Song song) {
-        favBtn.setImageResource(MusicStore.isFavorite(song.bvid)
-                ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
+        boolean fav = MusicStore.isFavorite(song.bvid);
+        favBtn.setImageResource(fav ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
+        favBtn.setColorFilter(androidx.core.content.ContextCompat.getColor(this,
+                fav ? R.color.heart_red : R.color.on_bg_secondary));
     }
 
     @Override

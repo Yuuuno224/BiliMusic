@@ -148,14 +148,26 @@ public final class PlayerConnection {
     }
 
     public static void next() {
-        if (controller != null) {
-            controller.seekToNextMediaItem();
+        Player p = controller;
+        if (p == null) {
+            return;
+        }
+        if (p.hasNextMediaItem()) {
+            p.seekToNextMediaItem();
+        } else if (p.getRepeatMode() != Player.REPEAT_MODE_OFF) {
+            p.seekTo(0, 0);
         }
     }
 
     public static void prev() {
-        if (controller != null) {
-            controller.seekToPreviousMediaItem();
+        Player p = controller;
+        if (p == null) {
+            return;
+        }
+        if (p.hasPreviousMediaItem()) {
+            p.seekToPreviousMediaItem();
+        } else if (p.getRepeatMode() != Player.REPEAT_MODE_OFF) {
+            p.seekTo(p.getMediaItemCount() - 1, 0);
         }
     }
 

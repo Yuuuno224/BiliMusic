@@ -213,7 +213,7 @@ public class PlaybackService extends MediaSessionService {
         });
     }
 
-    /** 解析单首并追加到队列（下一首播放 / 加入队列） */
+    /** 解析单首并追加到队列（下一首播放 / 加入队列）；空闲时自动开始播放 */
     private void resolveAndAppend(Song song, boolean asNext) {
         RESOLVER.execute(() -> {
             try {
@@ -222,10 +222,16 @@ public class PlaybackService extends MediaSessionService {
                     if (player == null) {
                         return;
                     }
+                    boolean idle = player.getPlaybackState() == Player.STATE_IDLE
+                            || player.getCurrentMediaItemIndex() < 0;
                     if (asNext && player.getCurrentMediaItemIndex() >= 0) {
                         player.addMediaItem(player.getCurrentMediaItemIndex() + 1, item);
                     } else {
                         player.addMediaItem(item);
+                    }
+                    if (idle) {
+                        player.prepare();
+                        player.play();
                     }
                 });
             } catch (Exception ignored) {
