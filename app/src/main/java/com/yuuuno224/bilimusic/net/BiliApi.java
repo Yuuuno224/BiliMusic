@@ -1,6 +1,7 @@
 package com.yuuuno224.bilimusic.net;
 
 import com.yuuuno224.bilimusic.model.ApiResp;
+import com.yuuuno224.bilimusic.model.FavData;
 import com.yuuuno224.bilimusic.model.FingerData;
 import com.yuuuno224.bilimusic.model.NavData;
 import com.yuuuno224.bilimusic.model.PlayData;
@@ -205,6 +206,45 @@ public final class BiliApi {
                 new TypeToken<ApiResp<NavData>>() { });
         if (!resp.ok() || resp.data == null) {
             throw new BiliException("获取用户信息失败: " + resp.message);
+        }
+        return resp.data;
+    }
+
+    /** 用户收藏夹列表（分页接口，含封面；需要登录） */
+    public static FavData.FolderList favFolders(long mid) throws IOException {
+        ensureBuvid();
+        ensureWbiKeys();
+        Map<String, String> params = new TreeMap<>();
+        params.put("up_mid", String.valueOf(mid));
+        params.put("pn", "1");
+        params.put("ps", "20");
+        String url = "https://api.bilibili.com/x/v3/fav/folder/created/list?"
+                + WbiSigner.sign(params, mixinKey);
+        ApiResp<FavData.FolderList> resp = parse(BiliHttp.get(url, null),
+                new TypeToken<ApiResp<FavData.FolderList>>() { });
+        if (!resp.ok() || resp.data == null) {
+            throw new BiliException("获取收藏夹失败: " + resp.message);
+        }
+        return resp.data;
+    }
+
+    /** 收藏夹内容分页（ps 上限 20，type=2 只取视频，wbi 签名） */
+    public static FavData.ResourceList favResources(long mediaId, int page) throws IOException {
+        ensureBuvid();
+        ensureWbiKeys();
+        Map<String, String> params = new TreeMap<>();
+        params.put("media_id", String.valueOf(mediaId));
+        params.put("pn", String.valueOf(page));
+        params.put("ps", "20");
+        params.put("order", "mtime");
+        params.put("type", "2");
+        params.put("platform", "web");
+        String url = "https://api.bilibili.com/x/v3/fav/resource/list?"
+                + WbiSigner.sign(params, mixinKey);
+        ApiResp<FavData.ResourceList> resp = parse(BiliHttp.get(url, null),
+                new TypeToken<ApiResp<FavData.ResourceList>>() { });
+        if (!resp.ok() || resp.data == null) {
+            throw new BiliException("获取收藏内容失败: " + resp.message);
         }
         return resp.data;
     }
