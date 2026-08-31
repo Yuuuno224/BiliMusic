@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.yuuuno224.bilimusic.net.BiliApi;
+import com.yuuuno224.bilimusic.model.FavData;
 import com.yuuuno224.bilimusic.model.SearchData;
 import com.yuuuno224.bilimusic.model.ViewData;
 import com.yuuuno224.bilimusic.model.PlayData;
@@ -52,6 +53,52 @@ public final class MusicRepository {
                 MAIN.post(() -> cb.onResult(songs));
             } catch (Exception e) {
                 MAIN.post(() -> cb.onError(e.getMessage() == null ? "搜索失败" : e.getMessage()));
+            }
+        });
+    }
+
+    /** 加载用户收藏夹列表（需要登录） */
+    public static void favFolders(long mid, final Callback<List<FavData.Folder>> cb) {
+        IO.execute(() -> {
+            try {
+                FavData.FolderList data = BiliApi.favFolders(mid);
+                List<FavData.Folder> folders = new ArrayList<>();
+                if (data != null && data.list != null) {
+                    folders.addAll(data.list);
+                }
+                MAIN.post(() -> cb.onResult(folders));
+            } catch (Exception e) {
+                MAIN.post(() -> cb.onError(e.getMessage() == null ? "获取收藏夹失败" : e.getMessage()));
+            }
+        });
+    }
+
+    /** 加载收藏夹内全部视频（自动翻页，上限 10 页） */
+    public static void favResources(long mediaId, final Callback<List<Song>> cb) {
+        IO.execute(() -> {
+            try {
+                List<Song> songs = new ArrayList<>();
+                for (int page = 1; page <= 10; page++) {
+                    FavData.ResourceList data = BiliApi.favResources(mediaId, page);
+                    if (data.medias == null || data.medias.isEmpty()) {
+                        break;
+                    }
+                    for (FavData.Resource r : data.medias) {
+                        if (r.bvid == null || r.bvid.isEmpty()) {
+                            continue;
+                        }
+                        String up = r.upper != null ? r.upper.name : "";
+                        Song s = new Song(r.bvid, stripHtml(r.title), up, r.cover, r.duration);
+                        s.cid = r.cid;
+                        songs.add(s);
+                    }
+                    if (!data.has_more) {
+                        break;
+                    }
+                }
+                MAIN.post(() -> cb.onResult(songs));
+            } catch (Exception e) {
+                MAIN.post(() -> cb.onError(e.getMessage() == null ? "获取收藏内容失败" : e.getMessage()));
             }
         });
     }

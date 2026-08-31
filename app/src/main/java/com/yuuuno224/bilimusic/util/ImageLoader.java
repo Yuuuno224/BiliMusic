@@ -50,22 +50,30 @@ public final class ImageLoader {
             cb.onLoaded(null);
             return;
         }
-        Bitmap mem = MEM.get(url);
+        // 部分接口返回 http:// 或协议相对地址，Android 9+ 禁止明文请求，统一升级 https
+        String norm = url;
+        if (norm.startsWith("//")) {
+            norm = "https:" + norm;
+        } else if (norm.startsWith("http://")) {
+            norm = "https://" + norm.substring(7);
+        }
+        final String key = norm;
+        Bitmap mem = MEM.get(key);
         if (mem != null) {
             cb.onLoaded(mem);
             return;
         }
         POOL.execute(() -> {
-            Bitmap bmp = diskGet(url);
+            Bitmap bmp = diskGet(key);
             if (bmp == null) {
-                bmp = netGet(url);
+                bmp = netGet(key);
                 if (bmp != null) {
-                    diskPut(url, bmp);
+                    diskPut(key, bmp);
                 }
             }
             Bitmap finalBmp = bmp;
             if (finalBmp != null) {
-                MEM.put(url, finalBmp);
+                MEM.put(key, finalBmp);
             }
             MAIN.post(() -> cb.onLoaded(finalBmp));
         });
