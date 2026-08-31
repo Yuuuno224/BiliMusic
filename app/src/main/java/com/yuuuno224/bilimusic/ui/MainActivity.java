@@ -67,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements PlayerConnection.
 
         miniBar.setOnClickListener(v -> startActivity(new android.content.Intent(this, NowPlayingActivity.class)));
         miniPlay.setOnClickListener(v -> PlayerConnection.toggle());
+
+        if (savedInstanceState == null) {
+            show(new SearchFragment(), "search");
+        }
         miniFav.setOnClickListener(v -> {
             Song song = PlayerConnection.currentSong();
             if (song != null) {
