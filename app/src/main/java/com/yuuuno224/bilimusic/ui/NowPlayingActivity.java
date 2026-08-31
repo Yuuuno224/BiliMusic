@@ -33,6 +33,7 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerConne
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private boolean seeking;
+    private Toast modeToast;
 
     private final Runnable progressTick = new Runnable() {
         @Override
@@ -90,7 +91,11 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerConne
             String label = nextMode == androidx.media3.common.Player.REPEAT_MODE_ALL
                     ? "列表循环" : nextMode == androidx.media3.common.Player.REPEAT_MODE_ONE
                     ? "单曲循环" : "顺序播放";
-            Toast.makeText(this, label, Toast.LENGTH_SHORT).show();
+            if (modeToast != null) {
+                modeToast.cancel();
+            }
+            modeToast = Toast.makeText(this, label, Toast.LENGTH_SHORT);
+            modeToast.show();
         });
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

@@ -107,6 +107,14 @@ public class LibraryFragment extends Fragment {
         reload();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (adapter != null) {
+            adapter.release();
+        }
+    }
+
     private void reload() {
         if (tab == 2) {
             loadFolders();
@@ -166,7 +174,7 @@ public class LibraryFragment extends Fragment {
         currentFolder = folder;
         folderMode = false;
         list.setAdapter(adapter);
-        clearBtn.setImageResource(R.drawable.ic_prev);
+        clearBtn.setImageResource(R.drawable.ic_arrow_back);
         clearBtn.setVisibility(View.VISIBLE);
         countText.setText("加载中…");
         MusicRepository.favResources(folder.id,

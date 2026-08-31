@@ -49,7 +49,7 @@
     <ImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/ic_next"
+        android:src="@drawable/ic_chevron_right"
         android:contentDescription="@string/nav_library"
         app:tint="@color/on_bg_secondary" />
 </LinearLayout>

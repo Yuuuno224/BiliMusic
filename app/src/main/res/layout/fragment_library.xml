@@ -19,6 +19,8 @@
             android:id="@+id/library_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
             android:layout_weight="1"
             android:text="0 首"
             android:textColor="@color/on_bg"

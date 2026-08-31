@@ -19,8 +19,9 @@ import com.yuuuno224.bilimusic.util.ImageLoader;
 
 import java.util.List;
 
-/** 歌曲列表适配器：点击播放 / 收藏 / 下一首播放 */
-public class SongAdapter extends RecyclerView.Adapter<SongAdapter.Holder> {
+/** 歌曲列表适配器：点击播放 / 收藏 */
+public class SongAdapter extends RecyclerView.Adapter<SongAdapter.Holder>
+        implements PlayerConnection.Listener {
 
     public interface OnSongClick {
         void onClick(List<Song> all, int position);
@@ -32,6 +33,17 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.Holder> {
     public SongAdapter(List<Song> songs, OnSongClick click) {
         this.songs = songs;
         this.click = click;
+        PlayerConnection.addListener(this);
+    }
+
+    @Override
+    public void onPlayerChanged() {
+        notifyDataSetChanged();
+    }
+
+    /** Fragment 销毁时调用，移除监听避免泄漏 */
+    public void release() {
+        PlayerConnection.removeListener(this);
     }
 
     @NonNull
@@ -67,9 +79,24 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.Holder> {
             MusicStore.toggleFavorite(s);
             applyFav(h.fav, MusicStore.isFavorite(s.bvid));
         });
+
+        Song current = PlayerConnection.currentSong();
+        boolean isCurrent = current != null && s.bvid != null && s.bvid.equals(current.bvid);
+        boolean playing = isCurrent && PlayerConnection.isPlaying();
+        h.more.setImageResource(playing ? R.drawable.ic_pause : R.drawable.ic_play);
+        h.more.setColorFilter(androidx.core.content.ContextCompat.getColor(h.more.getContext(),
+                isCurrent ? R.color.accent : R.color.on_bg_secondary));
         h.more.setOnClickListener(v -> {
-            PlayerConnection.playNext(v.getContext(), s);
-            Toast.makeText(v.getContext(), "已加入下一首播放", Toast.LENGTH_SHORT).show();
+            int pos = h.getBindingAdapterPosition();
+            if (pos == RecyclerView.NO_POSITION) {
+                return;
+            }
+            Song cur = PlayerConnection.currentSong();
+            if (cur != null && s.bvid != null && s.bvid.equals(cur.bvid)) {
+                PlayerConnection.toggle();
+            } else if (click != null) {
+                click.onClick(songs, pos);
+            }
         });
     }
 

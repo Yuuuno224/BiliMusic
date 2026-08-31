@@ -72,6 +72,14 @@ public class SearchFragment extends Fragment {
         renderHistory();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (adapter != null) {
+            adapter.release();
+        }
+    }
+
     private void renderHistory() {
         historyGroup.removeAllViews();
         List<String> history = MusicStore.searchHistory();
