@@ -7,11 +7,14 @@ B站音乐播放器 —— 把B站视频当音乐听。
 ## 功能
 
 - **扫码登录**：生成授权二维码，用B站 APP 扫码确认，自动获取 cookie
-- **搜索**：关键词搜索B站视频，WBI 签名保证接口合规
+- **搜索**：关键词搜索B站视频，WBI 签名保证接口合规，搜索历史记录
 - **播放**：DASH 音频流式播放，后台播放、通知栏控制、自动连播
-- **乐库**：收藏列表、最近播放历史
-- **我的**：账号信息、登录登出
-- **沉浸式播放页**：大封面、进度拖拽、上一首/下一首、循环模式
+- **沉浸式播放页**：大封面、进度拖拽、上一首/下一首、三档循环模式（顺序/列表循环/单曲循环）
+- **播放队列**：BottomSheet 弹出播放队列，支持点击跳转和删除
+- **乐库**：我喜欢、最近播放、B站收藏夹浏览（两级导航，登录后可用）
+- **迷你播放条**：底部常驻迷你条，快捷收藏、播放/暂停、打开播放队列
+- **我的**：账号信息、横向快捷入口（收藏/最近播放/收藏夹）、GitHub 仓库入口、关于
+- **深色主题**：Spotify 风格深色 UI，亮青点缀
 
 ## 技术栈
 
@@ -30,6 +33,7 @@ B站音乐播放器 —— 把B站视频当音乐听。
 - JDK 21（推荐 Android Studio 内置 JBR）
 - Android SDK Platform `android-36.1`
 - minSdk 26 / targetSdk 35
+- ABI：arm64-v8a
 
 ## 构建方法
 
@@ -59,18 +63,20 @@ app/src/main/java/com/yuuuno224/bilimusic/
 ├── auth/                       # 扫码登录（AuthManager）
 ├── player/                     # 播放服务
 │   ├── PlaybackService.java    # MediaSessionService + ExoPlayer
-│   ├── PlayerConnection.java   # MediaController 封装
-│   └── ...
-├── repo/                       # 数据仓库
+│   └── PlayerConnection.java   # MediaController 封装
+├── repo/                       # 数据仓库（MusicRepository）
 ├── ui/                         # 界面
 │   ├── MainActivity.java       # 主界面 + 迷你播放条
 │   ├── SearchFragment.java     # 搜索页
-│   ├── LibraryFragment.java    # 乐库页
+│   ├── LibraryFragment.java    # 乐库页（我喜欢/最近播放/收藏夹）
 │   ├── MeFragment.java         # 我的页
 │   ├── NowPlayingActivity.java # 沉浸式播放页
 │   ├── QrLoginActivity.java    # 扫码登录页
-│   └── SongAdapter.java        # 歌曲列表适配器
-└── util/                       # 工具
+│   ├── SongAdapter.java        # 歌曲列表适配器
+│   ├── FavFolderAdapter.java   # 收藏夹适配器
+│   ├── PlaylistAdapter.java    # 播放队列适配器
+│   └── PlaylistDialog.java     # 播放队列弹窗
+└── util/
     └── ImageLoader.java        # 图片加载器
 ```
 
@@ -81,8 +87,8 @@ app/src/main/java/com/yuuuno224/bilimusic/
 打 tag 并推送即可触发自动构建发布：
 
 ```bash
-git tag v0.3.0
-git push origin v0.3.0
+git tag v1.0.0
+git push origin v1.0.0
 ```
 
 构建完成后会自动在 GitHub Releases 页面发布 APK。

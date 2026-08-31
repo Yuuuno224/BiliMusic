@@ -3,7 +3,6 @@ package com.yuuuno224.bilimusic.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -74,6 +73,7 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerConne
         playPause.setOnClickListener(v -> PlayerConnection.toggle());
         next.setOnClickListener(v -> PlayerConnection.next());
         prev.setOnClickListener(v -> PlayerConnection.prev());
+        findViewById(R.id.np_playlist).setOnClickListener(v -> showPlaylist());
 
         modeBtn.setOnClickListener(v -> {
             androidx.media3.common.Player p = PlayerConnection.get();
@@ -184,6 +184,11 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerConne
         favBtn.setImageResource(fav ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
         favBtn.setColorFilter(androidx.core.content.ContextCompat.getColor(this,
                 fav ? R.color.heart_red : R.color.on_bg_secondary));
+    }
+
+    /** 弹出播放队列 BottomSheet */
+    private void showPlaylist() {
+        PlaylistDialog.show(this);
     }
 
     @Override
