@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,7 +55,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.Holder> {
             }
         });
         boolean fav = MusicStore.isFavorite(s.bvid);
-        h.fav.setImageResource(fav ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
+        applyFav(h.fav, fav);
 
         h.itemView.setOnClickListener(v -> {
             int pos = h.getBindingAdapterPosition();
@@ -64,15 +65,23 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.Holder> {
         });
         h.fav.setOnClickListener(v -> {
             MusicStore.toggleFavorite(s);
-            boolean nowFav = MusicStore.isFavorite(s.bvid);
-            h.fav.setImageResource(nowFav ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
+            applyFav(h.fav, MusicStore.isFavorite(s.bvid));
         });
-        h.more.setOnClickListener(v -> PlayerConnection.playNext(v.getContext(), s));
+        h.more.setOnClickListener(v -> {
+            PlayerConnection.playNext(v.getContext(), s);
+            Toast.makeText(v.getContext(), "已加入下一首播放", Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
     public int getItemCount() {
         return songs.size();
+    }
+
+    private static void applyFav(ImageButton btn, boolean fav) {
+        btn.setImageResource(fav ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
+        btn.setColorFilter(androidx.core.content.ContextCompat.getColor(btn.getContext(),
+                fav ? R.color.heart_red : R.color.on_bg_secondary));
     }
 
     static class Holder extends RecyclerView.ViewHolder {
