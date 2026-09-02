@@ -36,6 +36,11 @@ jobs:
             cp "$f" "BiliMusic-${{ github.ref_name }}-${base#app-}.apk"
           done
 
+      - name: Delete existing release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release delete ${{ github.ref_name }} --yes || true
+
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
