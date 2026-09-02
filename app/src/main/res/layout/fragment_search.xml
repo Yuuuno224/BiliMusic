@@ -42,21 +42,120 @@
             app:tint="@color/accent" />
     </LinearLayout>
 
-    <!-- 搜索历史 -->
-    <HorizontalScrollView
+    <!-- 未搜索首页内容 -->
+    <ScrollView
+        android:id="@+id/search_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none"
+        android:fillViewport="true">
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/history_group"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            app:chipSpacingHorizontal="8dp"
-            app:singleLine="true" />
-    </HorizontalScrollView>
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
+
+            <!-- 搜索历史 -->
+            <HorizontalScrollView
+                android:id="@+id/history_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:visibility="gone">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/history_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    app:chipSpacingHorizontal="8dp"
+                    app:singleLine="true" />
+            </HorizontalScrollView>
+
+            <!-- 热门搜索 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:text="热门搜索"
+                android:textColor="@color/on_bg"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/hot_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    app:chipSpacingHorizontal="8dp"
+                    app:singleLine="true" />
+            </HorizontalScrollView>
+
+            <!-- 音乐排行榜 -->
+            <LinearLayout
+                android:id="@+id/rank_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="音乐排行榜"
+                    android:textColor="@color/on_bg"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rank_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:overScrollMode="never" />
+            </LinearLayout>
+
+            <!-- 最近播放 -->
+            <LinearLayout
+                android:id="@+id/recent_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="最近播放"
+                    android:textColor="@color/on_bg"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recent_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:overScrollMode="never" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/search_progress"
@@ -72,7 +171,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="32dp"
-        android:text="@string/search_history"
+        android:visibility="gone"
         android:textColor="@color/on_bg_secondary"
         android:textSize="14sp" />
 
@@ -82,5 +181,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:paddingBottom="12dp" />
+        android:paddingBottom="12dp"
+        android:visibility="gone" />
 </LinearLayout>

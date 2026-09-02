@@ -5,6 +5,7 @@ import android.os.Looper;
 
 import com.yuuuno224.bilimusic.net.BiliApi;
 import com.yuuuno224.bilimusic.model.FavData;
+import com.yuuuno224.bilimusic.model.RecommendData;
 import com.yuuuno224.bilimusic.model.SearchData;
 import com.yuuuno224.bilimusic.model.ViewData;
 import com.yuuuno224.bilimusic.model.PlayData;
@@ -53,6 +54,40 @@ public final class MusicRepository {
                 MAIN.post(() -> cb.onResult(songs));
             } catch (Exception e) {
                 MAIN.post(() -> cb.onError(e.getMessage() == null ? "搜索失败" : e.getMessage()));
+            }
+        });
+    }
+
+    /** 热门搜索词（B站搜索广场接口） */
+    public static void hotWords(final Callback<List<String>> cb) {
+        IO.execute(() -> {
+            try {
+                List<String> words = BiliApi.hotSearchWords();
+                MAIN.post(() -> cb.onResult(words));
+            } catch (Exception e) {
+                MAIN.post(() -> cb.onError(e.getMessage() == null ? "获取热门搜索失败" : e.getMessage()));
+            }
+        });
+    }
+
+    /** 音乐区排行榜（B站音乐区热门视频） */
+    public static void musicRanking(final Callback<List<Song>> cb) {
+        IO.execute(() -> {
+            try {
+                List<RecommendData.RankItem> items = BiliApi.musicRanking();
+                List<Song> songs = new ArrayList<>();
+                for (RecommendData.RankItem item : items) {
+                    if (item.bvid == null || item.bvid.isEmpty()) {
+                        continue;
+                    }
+                    String up = item.author != null ? item.author : "";
+                    Song s = new Song(item.bvid, stripHtml(item.title), up, item.pic,
+                            parseDuration(item.duration));
+                    songs.add(s);
+                }
+                MAIN.post(() -> cb.onResult(songs));
+            } catch (Exception e) {
+                MAIN.post(() -> cb.onError(e.getMessage() == null ? "获取排行榜失败" : e.getMessage()));
             }
         });
     }

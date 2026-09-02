@@ -7,6 +7,7 @@ import com.yuuuno224.bilimusic.model.NavData;
 import com.yuuuno224.bilimusic.model.PlayData;
 import com.yuuuno224.bilimusic.model.QrGenData;
 import com.yuuuno224.bilimusic.model.QrPollData;
+import com.yuuuno224.bilimusic.model.RecommendData;
 import com.yuuuno224.bilimusic.model.SearchData;
 import com.yuuuno224.bilimusic.model.ViewData;
 import com.google.gson.Gson;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +109,42 @@ public final class BiliApi {
                 new TypeToken<ApiResp<SearchData>>() { });
         if (!resp.ok()) {
             throw new BiliException("搜索失败: " + resp.message);
+        }
+        return resp.data;
+    }
+
+    /** 热门搜索词（搜索广场接口） */
+    public static List<String> hotSearchWords() throws IOException {
+        ensureBuvid();
+        ApiResp<RecommendData> resp = parse(
+                BiliHttp.get("https://api.bilibili.com/x/web-interface/search/square?limit=10", null),
+                new TypeToken<ApiResp<RecommendData>>() { });
+        List<String> words = new ArrayList<>();
+        if (resp.ok() && resp.data != null && resp.data.trending != null
+                && resp.data.trending.list != null) {
+            for (RecommendData.HotItem item : resp.data.trending.list) {
+                String kw = item.show_name != null && !item.show_name.isEmpty()
+                        ? item.show_name : item.keyword;
+                if (kw != null && !kw.isEmpty()) {
+                    words.add(kw);
+                }
+            }
+        }
+        return words;
+    }
+
+    /** 音乐区排行榜（rid=3，全站音乐区热门视频） */
+    public static List<RecommendData.RankItem> musicRanking() throws IOException {
+        ensureBuvid();
+        String body = BiliHttp.get(
+                "https://api.bilibili.com/x/web-interface/ranking/index?rid=3&ps=20", null);
+        ApiResp<List<RecommendData.RankItem>> resp = GSON.fromJson(body,
+                new TypeToken<ApiResp<List<RecommendData.RankItem>>>() { }.getType());
+        if (resp == null) {
+            throw new BiliException("空响应");
+        }
+        if (!resp.ok() || resp.data == null) {
+            throw new BiliException("获取排行榜失败: " + resp.message);
         }
         return resp.data;
     }
