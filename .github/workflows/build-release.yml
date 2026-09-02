@@ -36,6 +36,18 @@ jobs:
             cp "$f" "BiliMusic-${{ github.ref_name }}-${base#app-}.apk"
           done
 
+      - name: Extract release notes from CHANGELOG.md
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          awk -v v="$VERSION" '
+            $0 ~ "^## \\[" v "\\]" { found=1; next }
+            found && /^## \[/ { exit }
+            found { print }
+          ' CHANGELOG.md > release_notes.md
+          echo "Extracted notes for $VERSION:"
+          cat release_notes.md
+
       - name: Delete existing release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -45,30 +57,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: BiliMusic-${{ github.ref_name }}-*.apk
-          body: |
-            ## BiliMusic ${{ github.ref_name }}
-
-            B站音乐播放器 —— 把B站视频当音乐听。纯客户端 Android 应用，无需后端。
-
-            ### 功能
-
-            - 扫码登录B站账号
-            - 关键词搜索B站视频（WBI 签名）
-            - 搜索首页：热门搜索词 + 音乐排行榜 + 最近播放
-            - DASH 音频流式播放，后台播放、通知栏控制
-            - 三档循环模式（顺序 / 列表循环 / 单曲循环）
-            - 播放队列管理（BottomSheet 弹窗，点击跳转、删除）
-            - 收藏与播放历史
-            - B站收藏夹浏览（登录后）
-            - 沉浸式播放页 + 迷你播放条快捷操作
-            - 我的页：快捷入口、GitHub 仓库、关于
-            - Spotify 风格深色 UI
-
-            ### 安装
-
-            下载对应架构的 APK 直接安装：
-
-            - **arm64-v8a**：64 位 ARM 设备（大多数现代手机）
-            - **armeabi-v7a**：32 位 ARM 设备（旧设备）
-
-            Android 8.0+。
+          body_path: release_notes.md
