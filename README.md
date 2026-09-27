@@ -8,6 +8,7 @@ B站音乐播放器 —— 把B站视频当音乐听。
 
 - **扫码登录**：生成授权二维码，用B站 APP 扫码确认，自动获取 cookie
 - **搜索**：关键词搜索B站视频，WBI 签名保证接口合规，搜索历史记录
+- **搜索首页**：热门搜索词（B站热搜接口）+ 音乐排行榜 + 最近播放
 - **播放**：DASH 音频流式播放，后台播放、通知栏控制、自动连播
 - **沉浸式播放页**：大封面、进度拖拽、上一首/下一首、三档循环模式（顺序/列表循环/单曲循环）
 - **播放队列**：BottomSheet 弹出播放队列，支持点击跳转和删除
@@ -28,12 +29,39 @@ B站音乐播放器 —— 把B站视频当音乐听。
 | UI | Material Components，Spotify 深色风格 |
 | 构建 | AGP 9.2.1 + Gradle 9.4.1 |
 
+## 项目架构
+
+```
+┌─────────────────────────────────────────────┐
+│                    UI 层                     │
+│  MainActivity · Search · Library · Me ·     │
+│  Player · Auth · Widget                     │
+├─────────────────────────────────────────────┤
+│                 Player 层                    │
+│  PlaybackService (ExoPlayer+MediaSession)   │
+│  PlayerConnection (MediaController 封装)     │
+├─────────────────────────────────────────────┤
+│                 Repo 层                      │
+│  MusicRepository (异步编排，线程切换)         │
+├─────────────────────────────────────────────┤
+│           Net 层          │    Store 层      │
+│  BiliApi · BiliHttp       │  MusicStore      │
+│  WbiSigner · CookieStore  │  (JSON 本地存储)  │
+└─────────────────────────────────────────────┘
+```
+
+**数据流**：UI → MusicRepository → BiliApi → BiliHttp → B站接口
+
+**播放架构**：UI 通过 PlayerConnection 持有 MediaController，控制 PlaybackService 中的 ExoPlayer；MediaSession 桥接通知栏与系统媒体控制。
+
+**本地存储**：MusicStore 以 JSON 文件持久化收藏、播放历史、搜索历史，无数据库依赖。
+
 ## 构建环境
 
 - JDK 21（推荐 Android Studio 内置 JBR）
 - Android SDK Platform `android-36.1`
 - minSdk 26 / targetSdk 35
-- ABI：arm64-v8a
+- ABI：arm64-v8a、armeabi-v7a
 
 ## 构建方法
 
@@ -45,53 +73,62 @@ B站音乐播放器 —— 把B站视频当音乐听。
 powershell -ExecutionPolicy Bypass -File build.ps1 -VerboseBuild
 ```
 
-产物路径：`app/build/outputs/apk/debug/app-debug.apk`
+产物路径：`app/build/outputs/apk/debug/`（按 ABI 分包）
 
 ## 项目结构
 
 ```
 app/src/main/java/com/yuuuno224/bilimusic/
-├── BiliMusicApp.java          # Application 入口
-├── net/                        # 网络层
-│   ├── BiliHttp.java           # HTTP 客户端 + Cookie 管理
-│   ├── BiliApi.java            # B站 API 封装
-│   ├── WbiSigner.java          # WBI 参数签名
-│   ├── CookieStore.java        # Cookie 持久化
-│   └── UrlCodec.java           # URL 编解码
-├── model/                      # 数据模型
-├── store/                      # 本地存储（Song, MusicStore）
-├── auth/                       # 扫码登录（AuthManager）
-├── player/                     # 播放服务
-│   ├── PlaybackService.java    # MediaSessionService + ExoPlayer
-│   └── PlayerConnection.java   # MediaController 封装
-├── repo/                       # 数据仓库（MusicRepository）
-├── ui/                         # 界面
-│   ├── MainActivity.java       # 主界面 + 迷你播放条
-│   ├── SearchFragment.java     # 搜索页
-│   ├── LibraryFragment.java    # 乐库页（我喜欢/最近播放/收藏夹）
-│   ├── MeFragment.java         # 我的页
-│   ├── NowPlayingActivity.java # 沉浸式播放页
-│   ├── QrLoginActivity.java    # 扫码登录页
-│   ├── SongAdapter.java        # 歌曲列表适配器
-│   ├── FavFolderAdapter.java   # 收藏夹适配器
-│   ├── PlaylistAdapter.java    # 播放队列适配器
-│   └── PlaylistDialog.java     # 播放队列弹窗
+├── BiliMusicApp.java              # Application 入口
+├── net/                            # 网络层
+│   ├── BiliHttp.java               # HTTP 客户端 + Cookie
+│   ├── BiliApi.java                # B站 API 封装
+│   ├── WbiSigner.java              # WBI 参数签名
+│   ├── CookieStore.java            # Cookie 持久化
+│   └── UrlCodec.java               # URL 编解码
+├── model/                          # 数据模型
+├── store/                          # 本地存储（Song, MusicStore）
+├── auth/                           # 扫码登录（AuthManager）
+├── player/                         # 播放服务
+│   ├── PlaybackService.java        # MediaSessionService + ExoPlayer
+│   └── PlayerConnection.java       # MediaController 封装
+├── repo/                           # 数据仓库（MusicRepository）
+├── ui/                             # 界面（按功能模块分包）
+│   ├── MainActivity.java           # 主界面 + 迷你播放条
+│   ├── search/                     # 搜索页
+│   │   └── SearchFragment.java
+│   ├── library/                    # 乐库页
+│   │   ├── LibraryFragment.java    # 我喜欢/最近播放/收藏夹
+│   │   └── FavFolderAdapter.java
+│   ├── me/                         # 我的页
+│   │   └── MeFragment.java
+│   ├── player/                     # 沉浸式播放页
+│   │   ├── NowPlayingActivity.java
+│   │   ├── PlaylistAdapter.java    # 播放队列适配器
+│   │   └── PlaylistDialog.java     # 播放队列弹窗
+│   ├── auth/                       # 扫码登录页
+│   │   └── QrLoginActivity.java
+│   └── widget/                     # 共用组件
+│       └── SongAdapter.java        # 歌曲列表适配器
 └── util/
-    └── ImageLoader.java        # 图片加载器
+    └── ImageLoader.java            # 图片加载器
 ```
 
 ## 发布
 
 项目配置了 GitHub Actions 自动构建（`.github/workflows/build-release.yml`）。
 
-打 tag 并推送即可触发自动构建发布：
+发布流程：
+
+1. 在 `CHANGELOG.md` 顶部添加新版本描述
+2. 打 tag 并推送：
 
 ```bash
-git tag v1.0.0
-git push origin v1.0.0
+git tag v1.1.0
+git push origin v1.1.0
 ```
 
-构建完成后会自动在 GitHub Releases 页面发布 APK。
+3. CI 自动构建各 ABI 的 APK，从 CHANGELOG.md 提取描述发布到 GitHub Release
 
 ## 协议
 

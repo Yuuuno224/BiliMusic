@@ -1,4 +1,4 @@
-package com.yuuuno224.bilimusic.ui;
+package com.yuuuno224.bilimusic.ui.library;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yuuuno224.bilimusic.R;
+import com.yuuuno224.bilimusic.ui.widget.SongAdapter;
 import com.yuuuno224.bilimusic.auth.AuthManager;
 import com.yuuuno224.bilimusic.model.FavData;
 import com.yuuuno224.bilimusic.model.NavData;

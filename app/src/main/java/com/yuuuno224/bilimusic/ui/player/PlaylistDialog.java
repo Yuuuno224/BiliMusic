@@ -1,4 +1,4 @@
-package com.yuuuno224.bilimusic.ui;
+package com.yuuuno224.bilimusic.ui.player;
 
 import android.content.Context;
 import android.view.View;

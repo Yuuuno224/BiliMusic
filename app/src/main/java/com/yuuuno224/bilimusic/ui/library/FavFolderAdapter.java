@@ -1,4 +1,4 @@
-package com.yuuuno224.bilimusic.ui;
+package com.yuuuno224.bilimusic.ui.library;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,4 +1,4 @@
-package com.yuuuno224.bilimusic.ui;
+package com.yuuuno224.bilimusic.ui.me;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +17,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.yuuuno224.bilimusic.R;
+import com.yuuuno224.bilimusic.ui.MainActivity;
+import com.yuuuno224.bilimusic.ui.auth.QrLoginActivity;
 import com.yuuuno224.bilimusic.model.NavData;
 import com.yuuuno224.bilimusic.auth.AuthManager;
 import com.yuuuno224.bilimusic.store.MusicStore;

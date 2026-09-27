@@ -21,7 +21,7 @@ import androidx.media3.session.SessionResult;
 
 import com.yuuuno224.bilimusic.store.MusicStore;
 import com.yuuuno224.bilimusic.store.Song;
-import com.yuuuno224.bilimusic.ui.NowPlayingActivity;
+import com.yuuuno224.bilimusic.ui.player.NowPlayingActivity;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;

@@ -1,4 +1,4 @@
-package com.yuuuno224.bilimusic.ui;
+package com.yuuuno224.bilimusic.ui.search;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.yuuuno224.bilimusic.R;
+import com.yuuuno224.bilimusic.ui.widget.SongAdapter;
 import com.yuuuno224.bilimusic.store.MusicStore;
 import com.yuuuno224.bilimusic.store.Song;
 import com.yuuuno224.bilimusic.player.PlayerConnection;
