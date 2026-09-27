@@ -12,6 +12,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.yuuuno224.bilimusic.R;
+import com.yuuuno224.bilimusic.ui.library.LibraryFragment;
+import com.yuuuno224.bilimusic.ui.me.MeFragment;
+import com.yuuuno224.bilimusic.ui.player.NowPlayingActivity;
+import com.yuuuno224.bilimusic.ui.player.PlaylistDialog;
+import com.yuuuno224.bilimusic.ui.search.SearchFragment;
 import com.yuuuno224.bilimusic.player.PlayerConnection;
 import com.yuuuno224.bilimusic.store.MusicStore;
 import com.yuuuno224.bilimusic.store.Song;

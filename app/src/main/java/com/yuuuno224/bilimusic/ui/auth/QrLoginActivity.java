@@ -1,4 +1,4 @@
-package com.yuuuno224.bilimusic.ui;
+package com.yuuuno224.bilimusic.ui.auth;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;

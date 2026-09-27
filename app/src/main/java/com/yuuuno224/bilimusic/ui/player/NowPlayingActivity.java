@@ -1,4 +1,4 @@
-package com.yuuuno224.bilimusic.ui;
+package com.yuuuno224.bilimusic.ui.player;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.yuuuno224.bilimusic.R;
+import com.yuuuno224.bilimusic.ui.widget.SongAdapter;
 import com.yuuuno224.bilimusic.store.MusicStore;
 import com.yuuuno224.bilimusic.store.Song;
 import com.yuuuno224.bilimusic.player.PlayerConnection;

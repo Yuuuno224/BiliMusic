@@ -28,12 +28,12 @@
         </activity>
 
         <activity
-            android:name=".ui.NowPlayingActivity"
+            android:name=".ui.player.NowPlayingActivity"
             android:exported="false"
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".ui.QrLoginActivity"
+            android:name=".ui.auth.QrLoginActivity"
             android:exported="false" />
 
         <service
